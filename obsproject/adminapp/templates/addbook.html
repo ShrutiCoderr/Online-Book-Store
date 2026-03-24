@@ -1,0 +1,57 @@
+{% extends 'adminbase.html' %}
+{% block admin %}
+<div class="row">
+    <div class="col-sm-12">
+        <h1>addbook</h1>
+        <div class="row">
+            <div class="col-sm-10 mx-auto">
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% if messages %}
+                        {% for m in messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{m}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                        {% endif%}
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <label for="tit">Title name</label>
+                            <input type="text" name="title" class="form-control mb-4" id="til">
+                            <label for="aut">Author name</label>
+                            <input type="text" name="author" class="form-control mb-4" id="aut">
+                            <label for="cate">Category</label>
+                            <select name="catid" name="category" class="form-control">
+                                <option value="">select category</option>
+                                {% for c in categories %}
+                                <option value="{{c.id}}">{{c.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="des">Description</label>
+                            <textarea name="description" class="form-control mb-4" id="des"></textarea>
+                            <label for="org">Original price</label>
+                            <input type="number" name="original_price" class="form-control mb-4" id="org">
+                            <label for="pri">Price</label>
+                            <input type="number" name="price" class="form-control mb-4" id="pri">
+                            <label for="pub">Published_Date</label>
+                            <input type="date" name="published_date" class="form-control mb-4" id="pub">
+                            <label for="lang">Language</label>
+                            <input type="text" name="language" class="form-control mb-4" id="lang">
+                            <label for="cov">Cover_image</label>
+                            <input type="file" name="cover_image" class="form-control mb-4" id="cov">
+                            <label for="st">Stock</label>
+                            <input type="number" name="stock" class="form-control mb-4" id="st">
+
+
+                            <button type="submit" class="btn btn-success">Submit</button>
+
+                        </form>
+                    </div>
+                    <div class="col-sm-6"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

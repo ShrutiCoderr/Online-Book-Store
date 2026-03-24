@@ -1,0 +1,76 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block main %}
+<div class="container mt-5">
+
+</div>
+<!-- <img src="{% static 'imgs/about.jpeg'%}" alt=""> -->
+<div class="row">
+  <h2 class="text-center">About Cloud Library</h2>
+  <div class="col-sm-6">
+    <div class="card " style="width: 18rem; margin-left: 250px;">
+      <img src="{% static 'imgs/about.jpeg'%}" alt="...">
+    </div>
+  </div>
+  <div class="col-sm-6" style="width: 600px;  margin-left: -160px;">
+    <h4>
+      Our Story
+    </h4>
+    <hr>
+    <p style="justify-content: center;">
+      Founded in 2010, our online bookstore began as a small passion project between friends who shared a love for
+      literature. What started as a modest collection of curated titles has grown into one of the most beloved
+      destinations for book lovers worldwide.
+    </p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6" style="width: 600px; margin-left:100px;">
+    <h4>
+
+      Our Mission
+    </h4>
+    <hr>
+    <p style="justify-content: center;">
+      We believe in the transformative power of books. Our mission is to connect readers with stories that inspire,
+      educate, and entertain, while supporting authors and publishers who create these wonderful works.
+    </p>
+
+  </div>
+  <div class="col-sm-6">
+    <div class="card" style="width: 18rem;margin-left: 100px;">
+      <img src="{% static 'imgs/mission.jpeg'%}" class="card-img-top" alt="...">
+    </div>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card card-shadow" style="width: 18rem; margin-left: 250px;">
+      <img src="{% static 'imgs/ques.png'%}" class="card-img-top" alt="..." height="200px">
+      
+    </div>
+  </div>
+  <div class="col-sm-6"style="width: 600px;  margin-left: -160px;">
+    <h4>
+      Why Choose Us ?
+    </h4>
+    <hr>
+    <ul>
+      <li>Carefully Curated Selection of over 1000,000 titles</li>
+      <li> Competitive Prices and Regular Promotions</li>
+      <li> Fast and Reliable worldwide shipping </li>
+      <li> Expert recommendations from our book loving staff</li>
+      <li> Eco - Friendly Packaging Options </li>
+
+    </ul>
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-primary">Get in Touch</button>
+    </div>
+
+  </div>
+</div>
+
+
+
+{% endblock %}

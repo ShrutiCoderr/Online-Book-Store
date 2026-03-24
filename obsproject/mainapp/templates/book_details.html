@@ -1,0 +1,43 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block main %}
+<div class="row">
+    <div class="col-sm-10 mx-auto">
+        <div class="row">
+            <div class="col-sm-6 text-center">
+                {% if book.cover_image %}
+                <img src="{{book.cover_image.url}}" alt="" class="img-fluid"
+                style="height: 400px !important;">
+                {% else %}
+                <img src="{% static 'imgs/default-book.png' %}" alt="No cover"
+                class="img-fluid" style="height:400px !important;">
+                {% endif %}
+                
+            </div>
+            <div class="col-sm-6">
+                <h1>{{book.title}}</h1>
+            
+                <h3>Author - {{book.author}}</h3>
+                <p>
+                    <b>Category:</b> -{{book.category.name}}
+                    <br>
+                    <b>Language:</b> -{{book.language}}
+                    <br>
+                    <b>Description:</b> -{{book.description}}
+                    <br>
+                    <b>Published Date:</b> -{{book.published_date}}
+                </p>
+                <p class="fw-semibold">
+                    Get it at <span class="text-success fs-4"> &#8377;{{book.price}}</span><del>&#8377;{{book.original_price}}</del>
+                </p>
+
+                
+                <a href="#" class="btn btn-success">Add To Cart</a> <a href="#" class="btn btn-success">Buy Now</a>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    {% endblock %}

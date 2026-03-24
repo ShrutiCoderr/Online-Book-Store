@@ -1,0 +1,37 @@
+{% extends 'userbase.html' %}
+{% load static %}
+{% block user %}
+<div class="row">
+    <div class="col-sm-12">
+        <h3>User Profile</h3>
+    </div>
+    <div class="col-sm-4 mx-auto">
+        <div class="card shadow mt-4 p-4">
+            <div class="text-center">
+                {% if user.picture %}
+                <img src="{{user.picture.url}}" alt="" class="rounded-circle" height="120px">
+                {% else %}
+                <img src="{% static 'imgs/avatar.jpeg'%}" alt="" class="rounded-circle" height="120px">
+                {% endif %}
+                   
+            </div>
+            <hr>
+            <h5 class="text-center">{{user.name}} </h5>
+            <p>
+                <b>Email:</b>{{user.email}}
+                <br>
+                <b>Contact No.:</b>{{user.contactno}}
+                <br>
+                <b>Address:</b>{% if user.address %} {{user.address}} {% else %} Not Updated {% endif %}
+            </p>
+            <hr>
+            <div class="text-center">
+                <a href="{% url 'editprofile' %}" class="btn btn-primary btn-sm"> <i class="ti ti-edit"></i>Edit Profile</a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

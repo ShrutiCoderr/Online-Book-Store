@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documment</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/splide.min.css'%}">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!-- header start -->
+        <div class="row">
+            <div class="col-sm-6" >
+                <img src="{% static 'imgs/logo.png'%}" alt="" height="100px" >
+            </div>
+            <div class="col-sm-6">
+                <form class="d-flex" role="search" style="margin-top: 30px;">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <!-- header end -->
+
+        <!--navbar start  -->
+        <div class="row sticky-top">
+            <div class="col-sm-12 p-0">
+                <nav class="navbar navbar-expand-lg" style="background-color: #768692;">
+                    <div class="container-fluid">
+                        <a class="navbar-brand text-light" href="#" style="font-style: science gothic;">Cloud
+                            Library</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{% url 'index' %}"
+                                        style="color: white;">Home</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link active text-light" aria-current="page"
+                                        href="{% url 'about' %}">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active text-light" href="{% url 'contact' %}">Contact</a>
+                                </li>
+
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" href="{% url 'register' %}">Register</a>
+                                </li>
+
+
+
+                            </ul>
+                            {% if userid %}
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    {{userid|truncatechars:10|upper}}
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{% url 'userprofile' %}">Profile</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'viewcart' %}">Cart</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'userlogout' %}">Logout</a></li>
+                                </ul>
+                            </div>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-primary"> Login</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- navbar end -->
+
+        {% block main %}
+
+        {% endblock%}
+
+
+
+        <!-- footer start -->
+        <!-- Footer -->
+        <footer class="text-center text-lg-start bg-body-tertiary text-muted">
+            <!-- Section: Social media -->
+            <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+
+                <!-- Right -->
+                <div>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <!-- Right -->
+            </section>
+            <!-- Section: Social media -->
+
+            <!-- Section: Links  -->
+            <section class="">
+                <div class="container text-center text-md-start mt-5">
+                    <!-- Grid row -->
+                    <div class="row mt-3">
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                            <!-- Content -->
+                            <h3 class="fw-bold mb-4">
+                                <i class="fas fa-gem me-3"></i>Our Locations
+                            </h3>
+                            <ul>
+                                <li><i class="fa-solid fa-location-dot"></i>India</li>
+                                <li>USA</li>
+                                <li>Russia</li>
+                                <li>France</li>
+                                <li>Japan</li>
+                                <li>England</li>
+                            </ul>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <!-- Links -->
+                            <h3 class="fw-bold mb-4">
+                                Quick Links
+                            </h3>
+                            <ul>
+                                <li>Home</li>
+                                <li>Categories</li>
+                                <li>About</li>
+                                <li>Contact</li>
+                                <li>Register</li>
+                            </ul>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <!-- Links -->
+                            <h3 class="fw-bold mb-4">
+                                Extra Links
+                            </h3>
+                            <ul>
+                                <li>Account Info</li>
+                                <li>Ordered Items</li>
+                                <li>Privacy Policy</li>
+                                <li>Payment Method</li>
+                                <li>Our Services</li>
+                            </ul>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                            <!-- Links -->
+                            <h3 class="fw-bold mb-4">Contact</h3>
+                            <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+                            <p>
+                                <i class="fas fa-envelope me-3"></i>
+                                info@example.com
+                            </p>
+                            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                        </div>
+                        <!-- Grid column -->
+                    </div>
+                    <!-- Grid row -->
+                </div>
+            </section>
+            <!-- Section: Links  -->
+        </footer>
+        <!-- Footer -->
+
+
+        <!--footer end  -->
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/splide.min.js'%}"></script>
+    <script>
+        var splide = new Splide('.splide', {
+            type: 'loop',
+            perPage: 4,
+            perMove: 1,
+            breakpoints: {
+                640: {
+                    perpage: 2
+                },
+                400: {
+                    perpage: 1
+                }
+            }
+        });
+
+        splide.mount();
+    </script>
+    <script src="{% static 'admin/assets/js/plugins/sweetalert2.all.min.js' %}"></script>
+    {% if messages %}
+    {% for message in messages %}
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+        Toast.fire({
+            icon: '{{message.tags}}',
+            title: '{{message}}'
+        });
+    </script>
+
+
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>
