@@ -67,6 +67,7 @@ def register(request):
         check = LoginInfo.objects.filter(username=email)
         if check:
             messages.warning(request,"This email is already registered.")
+            return redirect('register')
         log = LoginInfo(username=email,password=password)
         user = UserInfo(login=log,name=name,email=email,contactno=contactno)
         log.save()
@@ -99,4 +100,34 @@ def book_details(request,id):
         'book':book,
     }
     return render(request,"book_details.html",context)
+
+def forgot_password(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        try:
+            LoginInfo.objects.get(username=email, usertype='user')
+            return redirect('reset_password', email=email)
+        except LoginInfo.DoesNotExist:
+            messages.error(request, "No account found with that email address.")
+            return redirect('forgot_password')
+    return render(request, "forgot_password.html")
+
+def reset_password(request, email):
+    try:
+        login_info = LoginInfo.objects.get(username=email, usertype='user')
+    except LoginInfo.DoesNotExist:
+        messages.error(request, "Invalid request.")
+        return redirect('login')
+
+    if request.method == "POST":
+        password = request.POST.get('password')
+        cpassword = request.POST.get('cpassword')
+        if password != cpassword:
+            messages.error(request, "Passwords do not match.")
+            return redirect('reset_password', email=email)
+        login_info.password = password
+        login_info.save()
+        messages.success(request, "Password reset successfully. Please log in.")
+        return redirect('login')
+    return render(request, "reset_password.html", {'email': email})
 

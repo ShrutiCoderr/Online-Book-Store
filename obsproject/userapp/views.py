@@ -64,12 +64,12 @@ def editprofile(request):
         address = request.POST.get('address')
         user.name = name
         user.contactno = contactno
+        user.address = address
         if picture:
             user.picture = picture
-            user.address = address
-            user.save()
-            messages.success(request,"Your profile has been updated.")
-            return redirect('userprofile')
+        user.save()
+        messages.success(request,"Your profile has been updated.")
+        return redirect('userprofile')
     return render(request,"editprofile.html",context)
 def userorder(request):
     if not 'userid' in request.session:
@@ -133,17 +133,15 @@ def addtocart(request,bid):
     cart =Cart.objects.get(user=user)
     book =Book.objects.get(id=bid)
     if request.method == "POST":
-        quantity = request.POST.get('quantity')
-        if not quantity:
-            quantity = 1
-        ci = CartItem.objects.filter(cart = cart,book=book)
+        quantity = int(request.POST.get('quantity') or 1)
+        ci = CartItem.objects.filter(cart=cart, book=book)
         if ci:
-            item = CartItem.objects.get(cart=cart,book=book)
+            item = CartItem.objects.get(cart=cart, book=book)
             item.quantity += quantity
             item.save()
         else:
             CartItem.objects.create(cart=cart, book=book, quantity=quantity)
-        messages.success(request,f"{book.title}is added to cart")
+        messages.success(request,f"{book.title} is added to cart")
         return redirect('index')
     else:
         messages.error(request,"Somethiing went wrong")
@@ -189,10 +187,18 @@ def checkout(request):
         messages.error(request,"You are not logged in")
         return redirect('login')
 
+    if not settings.STRIPE_SECRET_KEY or settings.STRIPE_SECRET_KEY.startswith('sk_test_your'):
+        messages.error(request, "Payment is not configured. Please set STRIPE_SECRET_KEY in your .env file.")
+        return redirect('viewcart')
+
     userid = request.session.get('userid')
     user = UserInfo.objects.get(email=userid)
     cart = Cart.objects.get(user=user)
     items = CartItem.objects.filter(cart=cart)
+
+    if not items.exists():
+        messages.warning(request, "Your cart is empty.")
+        return redirect('viewcart')
 
     line_items = []
 
@@ -208,15 +214,22 @@ def checkout(request):
             'quantity': item.quantity,
         })
 
-    session = stripe.checkout.Session.create(
-        payment_method_types=['card', 'sepa_debit'],
-        line_items=line_items,
-        mode='payment',
-        success_url=request.build_absolute_uri('/userapp/payment-success/'),
-        cancel_url=request.build_absolute_uri('/viewcart/'),
-    )
-
-    return redirect(session.url, code=303)
+    try:
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=line_items,
+            mode='payment',
+            success_url=request.build_absolute_uri('/userapp/payment-success/'),
+            cancel_url=request.build_absolute_uri('/userapp/viewcart/'),
+        )
+        return redirect(session.url, code=303)
+    except stripe.error.AuthenticationError:
+        messages.error(request, "Payment configuration error. Please check your Stripe API key.")
+        return redirect('viewcart')
+    except Exception as e:
+        messages.error(request, f"Payment error: {str(e)}")
+        return redirect('viewcart')
 
 
 def payment_success(request):

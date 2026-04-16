@@ -134,5 +134,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # payment integration keys
-STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY') 
-STRIPE_PUBLISHABLE_KEY = 'your_publishable_key'
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', '')
